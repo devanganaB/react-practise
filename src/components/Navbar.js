@@ -1,55 +1,75 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import logo from '../hello_kitty.png';
-import React,{ useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const ipcRenderer = window.require('electron').ipcRenderer;
 
-
-//https://www.youtube.com/watch?v=A4H2DVkNgPs
-
 function Navbar() {
-
   const [value, setValue] = useState(0);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
-useEffect(() => {
-  // Check if the window width is smaller than the sm breakpoint
-  const handleResize = () => {
-    setIsSmallScreen(window.innerWidth < 640); // Adjust the breakpoint as needed
-  };
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 640);
+    };
 
-  // Initial check on mount
-  handleResize();
+    handleResize();
 
-  // Listen for window resize events
-  window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', handleResize);
 
-  // Clean up the event listener on component unmount
-  return () => {
-    window.removeEventListener('resize', handleResize);
-  };
-}, []);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
+  const AboutDropdown = () => (
+    <div className="group relative">
+      <NavLink
+        to="/"
+        className="text-white hover:text-gray-300 group-hover:border-gray-300 px-4 py-2 border-b-2"
+      >
+        Amenities
+      </NavLink>
 
+      <div className="absolute hidden bg-gray-800 group-hover:block mt-2 space-y-2">
+        <NavLink
+          to="/about"
+          className="block px-4 py-2 text-white hover:text-gray-300"
+        >
+          History
+        </NavLink>
+        
+        <NavLink
+          to="/about/name"
+          className="block px-4 py-2 text-white hover:text-gray-300"
+        >
+          Our Team
+        </NavLink>
+        <NavLink
+          to="/about/values"
+          className="block px-4 py-2 text-white hover:text-gray-300"
+        >
+          Our Values
+        </NavLink>
+      </div>
+    </div>
+  );
 
   return (
-
     <div>
       <nav className={`bg-gray-800 p-4 flex items-center justify-between ${isSmallScreen ? 'flex-col' : ''}`}>
-        <div className="flex items-center">
-          <img src={logo} alt="YourLogo" className="h-8 w-8 mr-2" /> 
+        <Link to="/" className="flex items-center">
+          <img src={logo} alt="YourLogo" className="h-8 w-8 mr-2" />
           <span className="text-white text-xl font-bold">Audit</span>
-        </div>
+        </Link>
         <ul className={`flex ${isSmallScreen ? 'flex-col items-start' : 'space-x-4'}`}>
           <li><Link to="/" className="text-white hover:text-gray-300">Home</Link></li>
-          <li><Link to="/about" className="text-white hover:text-gray-300">About Us</Link></li>
-          <li><a href="#community" className="text-white hover:text-gray-300">Community</a></li>
+          <li><AboutDropdown /></li>
+          <li><Link to="/comm" className="text-white hover:text-gray-300">Community</Link></li>
         </ul>
       </nav>
-      
     </div>
   );
 }
 
 export default Navbar;
-
