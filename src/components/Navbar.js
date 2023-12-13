@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 
 const ipcRenderer = window.require('electron').ipcRenderer;
 
+//https://www.youtube.com/watch?v=A4H2DVkNgPs
+
 function Navbar() {
   const [value, setValue] = useState(0);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
@@ -26,7 +28,7 @@ function Navbar() {
     <div className="group relative">
       <NavLink
         to="/"
-        className="text-white hover:text-gray-300 group-hover:border-gray-300 px-4 py-2 border-b-2"
+        className="text-white hover:text-gray-300 group-hover:border-gray-300 px-4 py-2"
       >
         Amenities
       </NavLink>
@@ -46,10 +48,10 @@ function Navbar() {
           Our Team
         </NavLink>
         <NavLink
-          to="/about/values"
-          className="block px-4 py-2 text-white hover:text-gray-300"
-        >
-          Our Values
+           to="/about/date"
+           className="block px-4 py-2 text-white hover:text-gray-300"
+         >
+           Date wise
         </NavLink>
       </div>
     </div>
